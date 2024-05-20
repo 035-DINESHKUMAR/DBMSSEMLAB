@@ -1,0 +1,211 @@
+CREATE TABLE ACCOUNT (
+    Ac_No INT PRIMARY KEY,
+    Ac_Name VARCHAR(50),
+    Openbal DECIMAL(10, 2),
+    Opentype VARCHAR(20),
+    Currentbal DECIMAL(10, 2)
+);
+
+CREATE TABLE TRANSACTION (
+    Tran_id INT PRIMARY KEY,
+    Ac_No INT,
+    Trans_Date DATE,
+    Trans_Type VARCHAR(20),
+    Trans_Amount DECIMAL(10, 2),
+    FOREIGN KEY (Ac_No) REFERENCES ACCOUNT(Ac_No)
+);
+
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (101, 'John Doe', 1000.00, 'Savings', 1200.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (102, 'Jane Smith', 1500.00, 'Checking', 1300.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (103, 'Mike Johnson', 2000.00, 'Savings', 2200.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (104, 'Emily Davis', 2500.00, 'Checking', 2100.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (105, 'Chris Lee', 3000.00, 'Savings', 3200.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (106, 'Sara White', 3500.00, 'Checking', 3300.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (107, 'David Brown', 4000.00, 'Savings', 4200.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (108, 'Linda Green', 4500.00, 'Checking', 4100.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (109, 'Tom Harris', 5000.00, 'Savings', 5200.00);
+INSERT INTO ACCOUNT (Ac_No, Ac_Name, Openbal, Opentype, Currentbal) VALUES (110, 'Nancy Young', 5500.00, 'Checking', 5300.00);
+
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (1, 101, TO_DATE('2024-01-01', 'YYYY-MM-DD'), 'Deposit', 200.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (2, 102, TO_DATE('2024-01-02', 'YYYY-MM-DD'), 'Withdrawal', 300.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (3, 103, TO_DATE('2024-01-03', 'YYYY-MM-DD'), 'Deposit', 400.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (4, 104, TO_DATE('2024-01-04', 'YYYY-MM-DD'), 'Withdrawal', 500.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (5, 105, TO_DATE('2024-01-05', 'YYYY-MM-DD'), 'Deposit', 600.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (6, 106, TO_DATE('2024-01-06', 'YYYY-MM-DD'), 'Withdrawal', 700.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (7, 107, TO_DATE('2024-01-07', 'YYYY-MM-DD'), 'Deposit', 800.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (8, 108, TO_DATE('2024-01-08', 'YYYY-MM-DD'), 'Withdrawal', 900.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (9, 109, TO_DATE('2024-01-09', 'YYYY-MM-DD'), 'Deposit', 1000.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (10, 110, TO_DATE('2024-01-10', 'YYYY-MM-DD'), 'Withdrawal', 1100.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (11, 101, TO_DATE('2024-01-11', 'YYYY-MM-DD'), 'Deposit', 1200.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (12, 102, TO_DATE('2024-01-12', 'YYYY-MM-DD'), 'Withdrawal', 1300.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (13, 103, TO_DATE('2024-01-13', 'YYYY-MM-DD'), 'Deposit', 1400.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (14, 104, TO_DATE('2024-01-14', 'YYYY-MM-DD'), 'Withdrawal', 1500.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (15, 105, TO_DATE('2024-01-15', 'YYYY-MM-DD'), 'Deposit', 1600.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (16, 106, TO_DATE('2024-01-16', 'YYYY-MM-DD'), 'Withdrawal', 1700.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (17, 107, TO_DATE('2024-01-17', 'YYYY-MM-DD'), 'Deposit', 1800.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (18, 108, TO_DATE('2024-01-18', 'YYYY-MM-DD'), 'Withdrawal', 1900.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (19, 109, TO_DATE('2024-01-19', 'YYYY-MM-DD'), 'Deposit', 2000.00);
+INSERT INTO TRANSACTION (Tran_id, Ac_No, Trans_Date, Trans_Type, Trans_Amount) VALUES (20, 110, TO_DATE('2024-01-20', 'YYYY-MM-DD'), 'Withdrawal', 2100.00);
+
+--QUERIES
+--QUESTION 1 Write a query to find all accounts that have made a withdrawal of more than $1000.
+SELECT t.ac_no 
+FROM Transaction t
+WHERE trans_type = 'Withdrawal' AND trans_amount > 1000
+GROUP BY t.ac_no
+ORDER BY t.ac_no;
+
+--QUESTION 2 Write a query to list the total transaction amount per account, grouped by transaction type.
+SELECT t.ac_no, t.trans_type, SUM(trans_amount) AS Total_Amout
+FROM Transaction t
+GROUP BY t.trans_type, t.ac_no
+ORDER BY t.ac_no;
+
+
+--QUESTION 3 Write a query to find the account with the highest current balance.
+SELECT ac_no, ac_name, currentbal AS Max_Current_balance
+FROM account
+WHERE currentbal = (SELECT MAX(currentbal) FROM account);
+
+--OBJECT
+--QUESTION 1 Create a sequence to generate account numbers and use it to insert new accounts.
+CREATE SEQUENCE accID
+INCREMENT BY 1
+START WITH 111
+NOCYCLE;
+INSERT INTO Account (ac_no, ac_name, openbal, opentype, currentbal)
+VALUES (accID.NEXTVAL, 'Alice', 1000.00, 'Savings', 1500.00);
+
+INSERT INTO Account (ac_no, ac_name, openbal, opentype, currentbal)
+VALUES (accID.NEXTVAL, 'Bob', 2000.00, 'Checking', 2500.00);
+
+INSERT INTO Account (ac_no, ac_name, openbal, opentype, currentbal)
+VALUES (accID.NEXTVAL, 'Charlie', 1500.00, 'Savings', 1750.00);
+
+INSERT INTO Account (ac_no, ac_name, openbal, opentype, currentbal)
+VALUES (accID.NEXTVAL, 'Diana', 1200.00, 'Checking', 1400.00);
+
+INSERT INTO Account (ac_no, ac_name, openbal, opentype, currentbal)
+VALUES (accID.NEXTVAL, 'Eve', 1700.00, 'Savings', 1900.00);
+
+SELECT * FROM aCcount 
+ORDER BY ac_no DESC;
+
+--QUESTION 2 Create a view that shows the account details along with the total transaction amount for each account.
+CREATE OR REPLACE VIEW acc_view
+AS (SELECT tr.ac_no, ac.ac_name, SUM(tr.trans_amount) AS Total_Transaction_Amount
+    FROM Transaction tr
+    JOIN Account ac
+    ON tr.ac_no = ac.ac_no
+    GROUP BY tr.ac_no, ac.ac_name);
+
+SELECT * FROM acc_view
+ORDER BY ac_no;
+
+--PROCEDURE, CURSOR, FUNCTION, TRIGGER
+--QUESTION 1 Write a procedure to calculate and update the current balance of an account after each transaction.
+CREATE OR REPLACE PROCEDURE upd_cur_bal(
+    ac_no IN INT
+)
+IS
+    amount INT;
+    trans_type VARCHAR(20);
+BEGIN
+    SELECT trans_type, trans_amount INTO trans_type, amount
+    FROM  (
+        SELECT t.trans_type, t.trans_amount
+        FROM Transaction t
+        WHERE t.ac_no = ac_no
+        ORDER BY t.trans_date DESC
+    )
+    WHERE ROWNUM = 1;
+    
+    -- Checking the transaction type to increment or decrement
+    IF trans_type = 'Withdrawal' THEN
+        UPDATE account SET currentbal = currentbal - amount
+        WHERE ac_no = ac_no;
+        DBMS_OUTPUT.PUT_LINE(amount || ' is deducted from current balance');
+    ELSIF trans_type = 'Deposit' THEN
+        UPDATE account SET currentbal = currentbal + amount
+        WHERE ac_no = ac_no;
+        DBMS_OUTPUT.PUT_LINE(amount || ' is credited to current balance');
+    END IF;
+EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('No transactions found for account ' || ac_no);
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('Exception occurred');
+END;
+
+
+DECLARE
+    ac_no int := 109;
+BEGIN
+    upd_cur_bal(ac_no);
+END;
+
+
+--QUESTION 2 Write a function that returns the total number of transactions for a given account number.
+CREATE OR REPLACE FUNCTION Count_Number_Of_Transactions(
+    ac_no int
+)
+RETURN int
+IS
+    count_trans int;
+BEGIN
+    SELECT COUNT(*) INTO count_trans
+    FROM Transaction
+    WHERE ac_no = Count_Number_Of_Transactions.ac_no;
+    RETURN count_trans;
+    EXCEPTION 
+        WHEN OTHERS THEN
+            RETURN -1;
+END;
+
+DECLARE 
+    ac_no int := 110;
+    countOfTransactions int;
+BEGIN 
+    countOfTransactions := Count_Number_Of_Transactions(ac_no);
+    DBMS_OUTPUT.PUT_LINE('The Count of Transactions for ' || ac_no || ' is ' || countOfTransactions);
+END;
+
+--QUESTION 3 Develop a trigger that updates the current balance of an account whenever a transaction is inserted or deleted
+CREATE OR REPLACE TRIGGER upd_bal
+AFTER INSERT OR DELETE ON Transaction
+FOR EACH ROW
+BEGIN
+    IF INSERTING THEN
+        IF :NEW.trans_type = 'Withdrawal' THEN
+            UPDATE account SET currentbal = currentbal - :NEW.trans_amount
+            WHERE ac_no = :NEW.ac_no;
+            DBMS_OUTPUT.PUT_LINE('Amount deducted on Insert');
+        ELSIF :NEW.trans_type = 'Deposit' THEN
+            UPDATE account SET currentbal = currentbal + :NEW.trans_amount
+            WHERE ac_no = :NEW.ac_no;
+            DBMS_OUTPUT.PUT_LINE('Amount credited on Insert');
+        END IF;
+    ELSIF DELETING THEN
+        IF :NEW.trans_type = 'Withdrawal' THEN
+            UPDATE account SET currentbal = currentbal + (SELECT trans_amount FROM Transaction WHERE tran_id = :OLD.tran_id)
+            WHERE ac_no = :OLD.ac_no;
+            DBMS_OUTPUT.PUT_LINE('Amount deducted on Delete');
+        ELSIF :NEW.trans_type = 'Deposit' THEN
+            UPDATE account SET currentbal = currentbal - (SELECT trans_amount FROM Transaction WHERE tran_id = :OLD.tran_id)
+            WHERE ac_no = :OLD.ac_no;
+            DBMS_OUTPUT.PUT_LINE('Amount credited on Delete');
+        END IF; 
+    END IF;
+END;
+
+-- Insert a transaction
+INSERT INTO Transaction (tran_id, ac_no, trans_type, trans_amount) VALUES (1, 101, 'Withdrawal', 50);
+
+-- Check if current balance updated correctly
+SELECT currentbal FROM account WHERE ac_no = 101;
+
+-- Delete a transaction
+DELETE FROM Transaction WHERE tran_id = 20;
+
+-- Check if current balance updated correctly
+SELECT currentbal FROM account WHERE ac_no = 110;
