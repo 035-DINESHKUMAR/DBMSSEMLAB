@@ -1,1 +1,347 @@
+--Creation
+create table SalesPeople(
+    sid int constraint l1 primary key,
+    sname varchar(30),
+    city varchar(20),          
+    commission int
+);
+--Insertion
+INSERT INTO SalesPeople (sid, sname, city, commission) VALUES (1, 'Alice', 'New York', 300);
+INSERT INTO SalesPeople (sid, sname, city, commission) VALUES (2, 'Bob', 'Los Angeles', 250);
+INSERT INTO SalesPeople (sid, sname, city, commission) VALUES (3, 'Charlie', 'Chicago', 200);
+INSERT INTO SalesPeople (sid, sname, city, commission) VALUES (4, 'Diana', 'Houston', 150);
+INSERT INTO SalesPeople (sid, sname, city, commission) VALUES (5, 'Eve', 'Phoenix', 100);
+--View
+CREATE OR REPLACE VIEW Person AS (SELECT * FROM SalesPeople);
+--Object Creation 
+CREATE OR REPLACE TYPE products AS OBJECT(
+    sale_date date,
+    qty int,
+    price int
+);
+--Drop
+DROP TYPE products;
+DROP TYPE tips;
+DROP SYNONYM synPerson;
+DROP VIEW Person;
+DROP TABLE SalesPeople;
+--Synonynm
+CREATE SYNONYM synPerson FOR Person;
+--SELECT
+SELECT * FROM SalesPeople;
+SELECT * FROM Person;
+SELECT * FROM synPerson;
+--Varray
+CREATE OR REPLACE TYPE tips AS VARRAY(5) OF int;
+--sequence 
+CREATE SEQUENCE seqID 
+INCREMENT BY 1
+START WITH 100
+NOCYCLE;
+--Creating a Table
+CREATE TABLE Sales(
+    pid int CONSTRAINT L2 PRIMARY KEY,
+    product products
+);
+--Drop
+DROP TABLE Sales;
+-- Insert command 1
+INSERT INTO Sales (pid, product)
+VALUES (seqID.NEXTVAL, products(DATE '2024-05-01', 10, 20));
+
+-- Insert command 2
+INSERT INTO Sales (pid, product)
+VALUES (seqID.NEXTVAL, products(DATE '2024-05-02', 15, 30));
+
+-- Insert command 3
+INSERT INTO Sales (pid, product)
+VALUES (seqID.NEXTVAL, products(DATE '2024-05-03', 20, 15));
+
+-- Insert command 4
+INSERT INTO Sales (pid, product)
+VALUES (seqID.NEXTVAL, products(DATE '2024-05-04', 8, 10));
+
+-- Insert command 5
+INSERT INTO Sales (pid, product)
+VALUES (seqID.NEXTVAL, products(DATE '2024-05-05', 12, 25));
+
+--Select
+SELECT *
+FROM Sales
+ORDER BY pid ASC;
+
+SELECT * FROM USER_TYPES WHERE TYPE_NAME = 'PRODUCTS';
+
+--Create Procedure QUESTION 1. Write a procedure to calculate the total commission earned by each salesperson.
+CREATE OR REPLACE PROCEDURE calculate_total_commission(
+    person_id IN int,
+    total_com OUT int
+)
+IS
+    v_total_com int;
+BEGIN
+    SELECT commission INTO v_total_com 
+    FROM SalesPeople
+    WHERE sid = person_id;
+    total_com := v_total_com;
+    DBMS_OUTPUT.PUT_LINE('The Total Commission amount for '|| person_id || ' is ' || total_com);
+EXCEPTION
+    WHEN OTHERS THEN 
+    DBMS_OUTPUT.PUT_LINE('Exception');
+END;
+
+DECLARE 
+    person_id int := 4;
+    total_commission_value int;
+BEGIN
+    calculate_total_commission(person_id, total_commission_value);
+END;
+
+--Create function QUESTION 2. Create a function to determine the average commission earned by salespeople in each city.
+CREATE OR REPLACE FUNCTION average_commission(
+    person_city varchar2
+)
+RETURN number
+IS 
+    avg_com number(10,2);
+BEGIN
+    SELECT ROUND(AVG(commission), 2) INTO avg_com 
+    FROM SalesPeople
+    WHERE city = person_city;
+    return avg_com;
+END;
+
+DECLARE
+    fun_result number(10,2);
+    city varchar(20) := 'Chicago'; 
+BEGIN
+    fun_result := average_commission(city);
+    DBMS_OUTPUT.PUT_LINE('The Average Commission for the '|| city || ' is ' || fun_result);
+END;
+
+CREATE TABLE log(
+    entry_date date,
+    entry_time timestamp,
+    pid int
+);
+DROP TABLE log;
+
+--Create trigger Design a trigger to update a log table whenever a new sale is inserted into the sales table.
+CREATE OR REPLACE TRIGGER log_trigger
+BEFORE INSERT OR DELETE ON SalesPeople
+FOR EACH ROW
+BEGIN
+    INSERT INTO log (entry_date, entry_time, pid) VALUES (sysdate, CURRENT_TIMESTAMP, :new.sid);
+END;
+
+DROP TRIGGER log_trigger;
+ALTER TRIGGER log_trigger COMPILE;
+
+
+DELETE FROM SalesPeople 
+WHERE sid = 6;
+
+INSERT INTO SalesPeople (sid, sname, city, commission) VALUES (7, 'Ivon', 'Phoenix', 100);
+
+SELECT * FROM log;
+
+
+--GPT SCENARIO
+CREATE TABLE Employees (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR(50),
+    department_id INT,
+    salary DECIMAL(10, 2)
+);
+
+-- Insert command 1
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (1, 'John Doe', 101, 50000.00);
+
+-- Insert command 2
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (2, 'Jane Smith', 102, 60000.00);
+
+-- Insert command 3
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (3, 'Michael Johnson', 101, 55000.00);
+
+-- Insert command 4
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (4, 'Emily Davis', 103, 48000.00);
+
+-- Insert command 5
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (5, 'William Brown', 102, 52000.00);
+
+-- Insert command 6
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (6, 'Olivia Wilson', 101, 58000.00);
+
+-- Insert command 7
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (7, 'James Taylor', 103, 53000.00);
+
+-- Insert command 8
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (8, 'Sophia Martinez', 102, 59000.00);
+
+-- Insert command 9
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (9, 'Alexander Anderson', 103, 51000.00);
+
+-- Insert command 10
+INSERT INTO Employees (employee_id, employee_name, department_id, salary)
+VALUES (10, 'Mia Thompson', 101, 56000.00);
+
+CREATE TABLE department_salary(
+    department_id int,
+    total_salary int
+);
+
+--QUESTION write the stored procedure using a cursor to iterate over the employees in the specified department and calculate their total salary.
+CREATE OR REPLACE PROCEDURE total_salary
+AS 
+    CURSOR total_salary_cr IS SELECT department_id, SUM(salary) FROM Employees GROUP BY department_id;
+    dept_id Employees.department_id % type;
+    tot_salary Employees.salary % type; 
+BEGIN
+    OPEN total_salary_cr;
+    LOOP
+        FETCH total_salary_cr INTO dept_id, tot_salary;
+        EXIT WHEN total_salary_cr % NOTFOUND;
+        INSERT INTO department_salary (department_id, total_salary) VALUES (dept_id, tot_salary);
+        DBMS_OUTPUT.PUT_LINE('The Total Salary of ' || dept_id || ' is ' || tot_salary);
+    END LOOP;
+    CLOSE total_salary_cr;
+    EXCEPTION
+        WHEN OTHERS THEN
+            DBMS_OUTPUT.PUT_LINE('Exception');
+            CLOSE total_salary_cr;
+END;
+        
+BEGIN
+    total_salary();
+END;
+
+SELECT * FROM department_salary ORDER BY department_id;
+
+CREATE TABLE Sale (
+    pid INT PRIMARY KEY,
+    product products,
+    sid INT,
+    FOREIGN KEY (sid) REFERENCES SalesPeople(sid)
+);
+
+-- Assuming SalesPeople already have the following data:
+-- (1, 'Alice', 'New York', 300)
+-- (2, 'Bob', 'Los Angeles', 250)
+-- (3, 'Charlie', 'Chicago', 200)
+-- (4, 'Diana', 'Houston', 150)
+-- (5, 'Eve', 'Phoenix', 100)
+
+-- Insert into Sales
+INSERT INTO Sale (pid, product, sid)
+VALUES (1, product(DATE '2024-05-01', 10, 20.00), 1);
+
+INSERT INTO Sale (pid, product, sid)
+VALUES (2, product(DATE '2024-05-02', 15, 30.00), 2);
+
+INSERT INTO Sale (pid, product, sid)
+VALUES (3, product(DATE '2024-05-03', 5, 50.00), 3);
+
+INSERT INTO Sales (pid, product, sid)
+VALUES (4, product(DATE '2024-05-04', 20, 25.00), 4);
+
+INSERT INTO Sales (pid, product, sid)
+VALUES (5, product(DATE '2024-05-05', 8, 75.00), 5);
+
+-- Additional Inserts
+INSERT INTO Sales (pid, product, sid)
+VALUES (6, product(DATE '2024-05-06', 12, 45.00), 1);
+
+INSERT INTO Sales (pid, product, sid)
+VALUES (7, product(DATE '2024-05-07', 18, 40.00), 2);
+
+INSERT INTO Sales (pid, product, sid)
+VALUES (8, product(DATE '2024-05-08', 10, 55.00), 3);
+
+INSERT INTO Sales (pid, product, sid)
+VALUES (9, product(DATE '2024-05-09', 7, 35.00), 4);
+
+INSERT INTO Sales (pid, product, sid)
+VALUES (10, product(DATE '2024-05-10', 25, 20.00), 5);
+
+
+CREATE OR REPLACE TRIGGER commission_percentage
+BEFORE INSERT OR DELETE ON Sales
+FOR EACH ROW
+BEGIN
+    UPDATE SalesPeople SET commission = commission + (:new.product.price * 0.05)
+    WHERE sid = :new.sid;
+END;
+DROP TRIGGER commission_percentage;
+
+-- Books Table
+CREATE TABLE Books (
+    book_id INT PRIMARY KEY,
+    title VARCHAR(100),
+    author VARCHAR(100),
+    genre VARCHAR(50),
+    available INT
+);
+
+-- Members Table
+CREATE TABLE Members (
+    member_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    address VARCHAR(200),
+    join_date DATE
+);
+
+-- Borrow Table
+CREATE TABLE Borrow (
+    borrow_id INT PRIMARY KEY,
+    member_id INT,
+    book_id INT,
+    borrow_date DATE,
+    return_date DATE,
+    FOREIGN KEY (member_id) REFERENCES Members(member_id),
+    FOREIGN KEY (book_id) REFERENCES Books(book_id)
+);
+
+INSERT INTO Books (book_id, title, author, genre, available) VALUES (1, '1984', 'George Orwell', 'Dystopian', 5);
+INSERT INTO Books (book_id, title, author, genre, available) VALUES (2, 'To Kill a Mockingbird', 'Harper Lee', 'Fiction', 3);
+INSERT INTO Books (book_id, title, author, genre, available) VALUES (3, 'The Great Gatsby', 'F. Scott Fitzgerald', 'Classic', 4);
+
+INSERT INTO Members (member_id, name, address, join_date) VALUES (1, 'John Doe', '123 Main St', SYSDATE);
+INSERT INTO Members (member_id, name, address, join_date) VALUES (2, 'Jane Smith', '456 Oak St', SYSDATE);
+
+CREATE OR REPLACE TRIGGER auto_trig
+AFTER INSERT OR UPDATE OR DELETE ON Borrow
+FOR EACH ROW
+BEGIN 
+    IF INSERTING THEN
+        UPDATE Books SET available = available - 1
+        WHERE book_id = :NEW.book_id;
+    ELSIF UPDATING THEN
+        IF :OLD.return_date IS NULL AND :NEW.return_date IS NOT NULL THEN
+            UPDATE Books SET available = available + 1
+            WHERE book_id = :NEW.book_id;
+        ELSIF :OLD.return_date IS NOT NULL AND :NEW.return_date IS NULL THEN
+            UPDATE Books SET available = available - 1
+            WHERE book_id = :NEW.book_id;
+        END IF;
+    ELSIF DELETING THEN
+        IF :OLD.return_date IS NULL THEN
+            UPDATE Books SET available = available + 1
+            WHERE book_id = :NEW.book_id;
+        END IF;
+    END IF;
+END;
+
+SELECT * FROM Books ORDER BY book_id;
+INSERT INTO Borrow (borrow_id, member_id, book_id, borrow_date, return_date) VALUES (1, 1, 1, SYSDATE, NULL);
+INSERT INTO Borrow (borrow_id, member_id, book_id, borrow_date, return_date) VALUES (2, 2, 2, SYSDATE, NULL);
+UPDATE Borrow SET return_date = SYSDATE WHERE borrow_id = 1;
 
